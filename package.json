@@ -1,0 +1,40 @@
+{
+  "name": "testArch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsoa:all": "pnpm tsoa routes && pnpm tsoa spec",
+    "start": "ts-node ./src/index.ts",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0",
+  "dependencies": {
+    "@tsoa/runtime": "^6.6.0",
+    "@types/body-parser": "^1.19.6",
+    "body-parser": "^2.2.0",
+    "env-cmd": "^10.1.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.18.0",
+    "swagger-ui-express": "^5.0.1",
+    "tsoa": "^6.6.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.1",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@vitest/ui": "^3.2.4",
+    "jsdom": "^26.1.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,9 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-test
+    restart: always
+    volumes:
+      - ./data/test-mongo:/data/db
+    ports:
+      - "27030:27017"

@@ -1,0 +1,486 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IUserCreateResponseDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"email",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUserCreateRequestDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CurrencyType": {
+				"enum": [
+					"USD",
+					"MNT",
+					"KRW"
+				],
+				"type": "string"
+			},
+			"ICurrency": {
+				"properties": {
+					"currencyName": {
+						"$ref": "#/components/schemas/CurrencyType"
+					},
+					"currencyRate": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"currencyName",
+					"currencyRate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IMoney": {
+				"properties": {
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"currency": {
+						"$ref": "#/components/schemas/ICurrency"
+					}
+				},
+				"required": [
+					"amount",
+					"currency"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IProduct": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"price": {
+						"$ref": "#/components/schemas/IMoney"
+					},
+					"stock": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"price",
+					"stock"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Money": {
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IOrder": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"items": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"totalAmount": {
+						"$ref": "#/components/schemas/Money"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"pending",
+							"paid",
+							"shipped",
+							"cancelled"
+						]
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"items",
+					"totalAmount",
+					"createdAt",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "testArch",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/users": {
+			"get": {
+				"operationId": "GetAllUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IUserCreateResponseDTO"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUserCreateResponseDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserCreateRequestDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "GetUserById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUserCreateResponseDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/products": {
+			"get": {
+				"operationId": "GetAllProducts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IProduct"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Products"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateProduct",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IProduct"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Products"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IProduct"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/products/{id}": {
+			"get": {
+				"operationId": "GetProductById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IProduct"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Products"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/orders": {
+			"get": {
+				"operationId": "GetAllOrders",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IOrder"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Orders"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IOrder"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Orders"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IOrder"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/orders/{id}": {
+			"get": {
+				"operationId": "GetOrderById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IOrder"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Orders"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/orders/user/{userId}": {
+			"get": {
+				"operationId": "GetOrdersByUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IOrder"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Orders"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
